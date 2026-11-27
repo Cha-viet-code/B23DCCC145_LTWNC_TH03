@@ -1,0 +1,25 @@
+import type { DefaultSession } from 'next-auth';
+import 'next-auth/jwt';
+import type { Role } from '../types';
+
+declare module 'next-auth' {
+  interface User {
+    role: Role;
+  }
+  interface Session {
+    user: { role: Role } & DefaultSession['user'];
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    role: Role;
+  }
+}
+
+// next-auth/jwt xuất lại từ @auth/core/jwt nên khai báo cả ở đây
+declare module '@auth/core/jwt' {
+  interface JWT {
+    role: Role;
+  }
+}
